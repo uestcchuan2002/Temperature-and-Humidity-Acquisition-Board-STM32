@@ -49,6 +49,7 @@ uint8_t stmflash_get_flash_sector(uint32_t addr)
  * @retval      0£º²Á³ý³É¹¦£»·Ç0£º²Á³ýÊ§°Ü£¨·µ»ØHAL¿â´íÎóÂë£©
  * @note        ÊÊÅäSTM32F4ÏµÁÐ£¬µçÑ¹·¶Î§Ä¬ÈÏ2.7~3.6V
  */
+__attribute__((section(".ramfunc")))
 int Erase_flash_sector(uint32_t sector_start_addr, uint32_t sector_num)
 {
     HAL_StatusTypeDef erase_status; // ½ÓÊÕ²Á³ý½á¹û
@@ -213,12 +214,14 @@ void Ota_Start(uint32_t firmware_size)
     /* 4. ²Á³ýAPPB·ÖÇø 8 9 10 11 */
 	
     int res;
-	if (boot_info.active_part == 0x0a) {
-		res = Erase_flash_sector(APPB_ADDR, 4);
+	if (SCB->VTOR == 0x0800C000) {
 		printf("²Á³ýappb\r\n");
+		res = Erase_flash_sector(APPB_ADDR, 4);
+		
 	} else {
-		res = Erase_flash_sector(APPA_ADDR, 5);
 		printf("²Á³ýappa\r\n");
+		res = Erase_flash_sector(APPA_ADDR, 5);
+		
 	}
 		
     if(res != 0) {

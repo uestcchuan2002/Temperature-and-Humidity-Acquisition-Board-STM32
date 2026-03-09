@@ -15,7 +15,9 @@ uint8_t  usart3_tx_buf[USART3_TX_BUF_LEN];
 
 uint16_t usart3_rx_len = 0;
 
-uint8_t modbus_read_cmd[] = {0x01, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0xCB};
+uint8_t modbus_read_cmd_01[] = {0x01, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0xCB};
+uint8_t modbus_read_cmd_02[] = {0x02, 0x04, 0x00, 0x00, 0x00, 0x02, 0x71, 0xF8};
+uint8_t modbus_read_cmd_03[] = {0x03, 0x04, 0x00, 0x00, 0x00, 0x02, 0x70, 0x29};
 
 /* FreeRTOS */
 SemaphoreHandle_t xUSart3_RxDoneSemaphore = NULL;
@@ -176,11 +178,31 @@ void DMA1_Stream3_IRQHandler(void)
 /* ===================== 传感器发送指令 ===================== */
 void USART3_Send_Commend_Task(void *argument) 
 {
+    uint8_t flag_read_cmd = 1;
 	for (;;)
 	{
-		USART3_DMA_SendData(modbus_read_cmd, 8);
+        if (++flag_read_cmd == 4) {
+            flag_read_cmd = 1;
+        }
+
+        switch (flag_read_cmd)
+        {
+        case 1:
+            USART3_DMA_SendData(modbus_read_cmd_01, 8);
+            break;
+        case 2:
+            USART3_DMA_SendData(modbus_read_cmd_02, 8);
+            break;
+        case 3:
+            USART3_DMA_SendData(modbus_read_cmd_03, 8);
+            break;
+
+        default:
+            break;
+        }
+		
 		xTaskNotify(IWDG_FRESHTask_Handler, 0x08, eSetBits);
-		vTaskDelay(2000);
+		vTaskDelay(1000);
 	}
 }
 
@@ -241,12 +263,13 @@ void USART3_Process_Task(void *argument)
 		// 1. 等待串口 IDLE 中断释放信号量
         if (xSemaphoreTake(xUSart3_RxDoneSemaphore, portMAX_DELAY) == pdTRUE)
         {
-            // USART3_Parse_Data(usart3_rx_buf, usart3_rx_len);
+
 			// 2. 协议解析（校验 CRC）
 			if (usart3_rx_len >= 8 && crc16(usart3_rx_buf, usart3_rx_len-2) == 
                 ((usart3_rx_buf[usart3_rx_len-1] << 8) | usart3_rx_buf[usart3_rx_len-2])) 
             {
 				taskENTER_CRITICAL();
+                sensor_pkg.device_id   = usart3_rx_buf[0];
                 sensor_pkg.temperature = ((usart3_rx_buf[3] << 8) | usart3_rx_buf[4]) / 10.0f;
                 sensor_pkg.humidity    = ((usart3_rx_buf[5] << 8) | usart3_rx_buf[6]) / 10.0f;
 				// 记录当前系统时间

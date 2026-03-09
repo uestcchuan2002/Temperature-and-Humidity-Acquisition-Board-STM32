@@ -47,7 +47,7 @@ void USART3_Send_Commend_Task(void *pvParameters); /* 任务函数 */
  * 包括: 任务句柄 任务优先级 堆栈大小 创建任务
  */
 #define SENSOR_DATA_UPLOAD_TASK_PRIO 11           /* 任务优先级 */
-#define SENSOR_DATA_UPLOAD_TASK_STK_SIZE 128      /* 任务堆栈大小 */
+#define SENSOR_DATA_UPLOAD_TASK_STK_SIZE 512      /* 任务堆栈大小 */
 TaskHandle_t SENSOR_DATA_UPLOADTask_Handler;      /* 任务句柄 */
 void Sensor_Data_UpData_Task(void *pvParameters); /* 任务函数 */
 
@@ -95,7 +95,7 @@ void iwdg_fresh_task(void *pvParameters); /* 任务函数 */
  * 包括: 队列句柄 深度 传输内容
  */
 QueueHandle_t xSensorDataQueue = NULL;             /* 数据传输队列 */
-#define xSensorDataQueue_Deep 10                   /* 数据传输队列深度 */
+#define xSensorDataQueue_Deep 20                   /* 数据传输队列深度 */
 #define xSensorDataQueue_Size sizeof(SensorData_t) /* 数据传输队列大小 */
 
 /* 显示消息队列的数量 */
@@ -362,8 +362,8 @@ void Sensor_Data_UpData_Task(void *pvParameters)
         // 1. 阻塞等待队列中的数据（无数据时任务挂起，不占用CPU）
         if (xQueueReceive(xSensorDataQueue, &received_data, portMAX_DELAY) == pdTRUE)
         {
-            printf("[Updata] 成功 - 温度:%.1f 湿度:%.1f 20%d-%d-%d-%d-%d-%d,\r\n",
-                    received_data.temperature, received_data.humidity, received_data.time[0], received_data.time[1],
+            printf("设备[%d] - 温度:%.1f 湿度:%.1f 20%d-%d-%d-%d-%d-%d,\r\n",
+                    received_data.device_id, received_data.temperature, received_data.humidity, received_data.time[0], received_data.time[1],
                     received_data.time[2], received_data.time[3], received_data.time[4], received_data.time[5]);
         }
     }
@@ -437,7 +437,7 @@ void tcp_send_task(void *pvParameters)
     for (;;)
     {
         // 尝试获取信号量，超时时间10ms
-        if (xSemaphoreTake(xOtaSendSemaphore, pdMS_TO_TICKS(10)) == pdTRUE)
+        if (xSemaphoreTake(xOtaSendSemaphore, 0) == pdTRUE)
         {
             int ret = send(g_sock_conn, send_buf, sizeof(send_buf), 0);
 
@@ -477,44 +477,51 @@ uint8_t g_ota_is_running = 0;   // 0: 正常模式, 1: OTA 模式
  */
 void iwdg_fresh_task(void *pvParameters)
 {
-    uint32_t task_status;                                                                   /* 用于保存任务通知 */
-    uint8_t display_task_flag, key_task_flag, led_task_flag, usart3_send_commend_task_flag; /* 各任务来到的标志 */
-    display_task_flag = key_task_flag = led_task_flag = usart3_send_commend_task_flag = 0;
+    uint32_t task_status = 0;
+
+    const uint32_t REQUIRED_MASK =
+        0x01 |  // display
+        0x02 |  // key
+        0x04 |  // led
+        0x08;   // usart
 
     for (;;)
     {
-        xTaskNotifyWait(0x00,         /* 清除任何先前的通知 */
-                        0xFFFFFFFF,   /* 等待所有通知标志 */
-                        &task_status, /* 获取任务状态 */
-                        pdMS_TO_TICKS(2000));
-        
-        if (g_ota_is_running) {
-            /* --- OTA 模式逻辑 --- */
-            // 在 OTA 期间，只要 ota_task 发送了 0x80 标志，就允许喂狗
-            if (task_status & 0x80) 
+        xTaskNotifyWait(
+            0,
+            0,
+            &task_status,
+            pdMS_TO_TICKS(2000));
+
+        if (g_ota_is_running)
+        {
+            if (task_status & 0x80)
             {
                 IWDG_Feed();
-                task_status = 0; // 清除状态，等待下一次 OTA 包的通知
+                task_status &= ~0x80;
             }
-        } else {
-            /* --- 正常模式逻辑 --- */
-            // 在正常模式下，检查所有任务的状态，只有当所有任务都正常运行时才喂狗   
-            if (task_status & 0x01) display_task_flag = 1;
-            if (task_status & 0x02) key_task_flag = 1;
-            if (task_status & 0x04) led_task_flag = 1;
-            if (task_status & 0x08) usart3_send_commend_task_flag = 1;
-            /* 所有任务均正常运行 */
-            if (display_task_flag && key_task_flag && led_task_flag && usart3_send_commend_task_flag)  {
-                IWDG_Feed();    /* 正常喂狗 */
+        }
+        else
+        {
+            if ((task_status & REQUIRED_MASK) == REQUIRED_MASK)
+            {
+                IWDG_Feed();
 
-                if (flag_ota_state_testing == 1 && boot_info.state == BOOT_TESTING) {
-                    flag_ota_state_testing = 0; // 至0标志位，防止多次写入
-                    // 说明当前测试结果正常，可以将状态更新为 BOOT_NORMAL
+                /* 清除任务状态 */
+                task_status &= ~REQUIRED_MASK;
+
+                if (flag_ota_state_testing == 1 && boot_info.state == BOOT_TESTING)
+                {
+                    flag_ota_state_testing = 0;
+
                     boot_info.state = BOOT_NORMAL;
-					boot_info.boot_count = 0;
-					bootInfoStruct_storageTo24C02();
+                    boot_info.boot_count = 0;
+
+                    bootInfoStruct_storageTo24C02();
+
                     printf("OTA测试通过, 状态更新为 BOOT_NORMAL\r\n");
                     printf("OTA升级结束, 2秒后重启...\r\n");
+
                     NVIC_SystemReset();
                 }
             }

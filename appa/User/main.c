@@ -43,8 +43,8 @@ int main(void)
 	}
 
 	system_config_to_printf();			/* 打印系统配置 */
-	printf("this is app A\r\n");
-	lcd_show_string(30,  170, 200, 40, 32, "APPA", BLUE);
+	printf("this is app B\r\n");
+	lcd_show_string(30,  170, 200, 40, 32, "APPB", BLUE);
     Ota_OprationAfterJump();            /* OTA跳转后操作 */
 
     freertos_demo();                    /* 创建lwIP的任务函数 */
