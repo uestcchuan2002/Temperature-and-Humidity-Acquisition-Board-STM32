@@ -107,6 +107,7 @@
 ..\..\output\ota.o: ..\..\Drivers\./BSP/KEY/key.h
 ..\..\output\ota.o: ..\..\Middlewares\./MALLOC/malloc.h
 ..\..\output\ota.o: ..\..\Drivers\./BSP/IWDG/iwdg.h
+..\..\output\ota.o: C:\app\KEILMDK\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\ota.o: ..\..\User\ota.h
 ..\..\output\ota.o: ..\..\Middlewares\lwip\arch\lwip_comm.h
 ..\..\output\ota.o: ..\..\Drivers\./BSP/ETHERNET/ethernet.h
@@ -138,6 +139,5 @@
 ..\..\output\ota.o: ..\..\Middlewares\lwip\src\include\lwip/stats.h
 ..\..\output\ota.o: ..\..\Middlewares\lwip\src\include\lwip/inet.h
 ..\..\output\ota.o: ..\..\Middlewares\lwip\src\include\lwip/errno.h
-..\..\output\ota.o: C:\app\KEILMDK\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\ota.o: ..\..\Drivers\./BSP/24CXX/24C02.h
 ..\..\output\ota.o: ..\..\Drivers\./BSP/IIC/myiic.h

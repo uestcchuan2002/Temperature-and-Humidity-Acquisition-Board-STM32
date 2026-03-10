@@ -29,6 +29,7 @@
 #include "./BSP/KEY/key.h"
 #include "./MALLOC/malloc.h"
 #include "./BSP/IWDG/iwdg.h"
+#include "string.h"
 #include "ota.h"
 #include "lwip_comm.h"
 #include "lwipopts.h"
@@ -48,6 +49,7 @@ extern TaskHandle_t KEYTask_Handler;
 extern TaskHandle_t DISPLAYTask_Handler;
 
 extern QueueHandle_t xSensorDataQueue; 
+extern QueueHandle_t xSensorTCPQueue;
 extern TaskHandle_t IWDG_FRESHTask_Handler;
 
 void freertos_demo(void);   /* 创建lwIP的任务函�? */

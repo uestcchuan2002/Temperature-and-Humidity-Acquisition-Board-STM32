@@ -103,6 +103,7 @@ void Ota_Start(uint32_t firmware_size); /* OTA开始处理函数声明 */
 void Ota_ProcessPacket(uint8_t *data, uint16_t len); /* OTA数据处理函数声明 */
 void IAP_ExecuteApp(uint32_t App_Addr);	// OTA程序跳转
 void Ota_OprationAfterJump(void); /* OTA跳转后操作函数声明 */
+uint16_t CRC16_Modbus(uint8_t *data, uint16_t len); /* OTA CRC16校验函数声明 */
 void bootInfoStruct_storageTo24C02(void); /* 存储boot_info结构体信息到24C02函数声明 */
 void bootInfoStruct_readFrom24C02(void); /* 从24C02读取boot_info结构体信息函数声明 */
 #endif // !__OTA_H

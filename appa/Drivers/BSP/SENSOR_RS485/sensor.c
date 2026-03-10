@@ -252,7 +252,6 @@ void USART3_Parse_Data(uint8_t *pData, uint16_t len)
 
 /* ===================== 传感器数据解析任务 ===================== */
 
-
 void USART3_Process_Task(void *argument)
 {
 	RTC_TimeTypeDef RTC_TimeStruct;
@@ -283,9 +282,10 @@ void USART3_Process_Task(void *argument)
 				sensor_pkg.time[4] = RTC_TimeStruct.Minutes;
 				sensor_pkg.time[5] = RTC_TimeStruct.Seconds;
 				
-
                 // 3. 将结构体数据推入队列，不等待（因为它是生产者）
                 xQueueSend(xSensorDataQueue, &sensor_pkg, 0);
+
+                xQueueSend(xSensorTCPQueue, &sensor_pkg, 0);
 				taskEXIT_CRITICAL();
             }
 			

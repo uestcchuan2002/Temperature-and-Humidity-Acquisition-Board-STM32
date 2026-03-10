@@ -106,8 +106,8 @@
 ..\..\output\freertos_demo.o: ..\..\Drivers\./BSP/KEY/key.h
 ..\..\output\freertos_demo.o: ..\..\Middlewares\./MALLOC/malloc.h
 ..\..\output\freertos_demo.o: ..\..\Drivers\./BSP/IWDG/iwdg.h
-..\..\output\freertos_demo.o: ..\..\User\ota.h
 ..\..\output\freertos_demo.o: C:\app\KEILMDK\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\freertos_demo.o: ..\..\User\ota.h
 ..\..\output\freertos_demo.o: ..\..\Drivers\./BSP/24CXX/24C02.h
 ..\..\output\freertos_demo.o: ..\..\Drivers\./BSP/IIC/myiic.h
 ..\..\output\freertos_demo.o: ..\..\Middlewares\lwip\arch\lwip_comm.h

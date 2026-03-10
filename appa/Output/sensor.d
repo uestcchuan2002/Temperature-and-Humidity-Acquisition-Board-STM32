@@ -95,9 +95,9 @@
 ..\..\output\sensor.o: ..\..\Drivers\./BSP/KEY/key.h
 ..\..\output\sensor.o: ..\..\Middlewares\./MALLOC/malloc.h
 ..\..\output\sensor.o: ..\..\Drivers\./BSP/IWDG/iwdg.h
+..\..\output\sensor.o: C:\app\KEILMDK\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\sensor.o: ..\..\User\ota.h
 ..\..\output\sensor.o: ..\..\User\freertos_demo.h
-..\..\output\sensor.o: C:\app\KEILMDK\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\sensor.o: ..\..\Drivers\./BSP/24CXX/24C02.h
 ..\..\output\sensor.o: ..\..\Drivers\./BSP/IIC/myiic.h
 ..\..\output\sensor.o: ..\..\Middlewares\FreeRTOS\include\FreeRTOS.h

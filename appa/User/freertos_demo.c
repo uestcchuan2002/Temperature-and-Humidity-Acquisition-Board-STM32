@@ -3,104 +3,85 @@
 /******************************************************************************************************/
 /*FreeRTOS配置*/
 
-/* START_TASK 任务 配置
- * 包括: 任务句柄 任务优先级 堆栈大小 创建任务
- */
-#define START_TASK_PRIO 5            /* 任务优先级 */
-#define START_STK_SIZE 512           /* 任务堆栈大小 */
-TaskHandle_t StartTask_Handler;      /* 任务句柄 */
-void start_task(void *pvParameters); /* 任务函数 */
+/* START_TASK 任务 配置 */
+#define START_TASK_PRIO 5                           /* 任务优先级 */
+#define START_STK_SIZE 512                          /* 任务堆栈大小 */
+TaskHandle_t StartTask_Handler;                     /* 任务句柄 */
+void start_task(void *pvParameters);                /* 任务函数 */
 
-/* LWIP_DEMO 任务 配置
- * 包括: 任务句柄 任务优先级 堆栈大小 创建任务
- */
-#define LWIP_DMEO_TASK_PRIO 11           /* 任务优先级 */
-#define LWIP_DMEO_STK_SIZE 512           /* 任务堆栈大小 */
-TaskHandle_t LWIP_Task_Handler;          /* 任务句柄 */
-void lwip_demo_task(void *pvParameters); /* 任务函数 */
+/* LWIP_DEMO 任务 配置 */
+#define LWIP_DMEO_TASK_PRIO 11                      /* 任务优先级 */
+#define LWIP_DMEO_STK_SIZE 512                      /* 任务堆栈大小 */
+TaskHandle_t LWIP_Task_Handler;                     /* 任务句柄 */
+void lwip_demo_task(void *pvParameters);            /* 任务函数 */
 
-/* LED_TASK 任务 配置
- * 包括: 任务句柄 任务优先级 堆栈大小 创建任务
- */
-#define LED_TASK_PRIO 10           /* 任务优先级 */
-#define LED_STK_SIZE 128           /* 任务堆栈大小 */
-TaskHandle_t LEDTask_Handler;      /* 任务句柄 */
-void led_task(void *pvParameters); /* 任务函数 */
+/* LED_TASK 任务 配置 */
+#define LED_TASK_PRIO 10                            /* 任务优先级 */
+#define LED_STK_SIZE 128                            /* 任务堆栈大小 */
+TaskHandle_t LEDTask_Handler;                       /* 任务句柄 */
+void led_task(void *pvParameters);                  /* 任务函数 */
 
-/* USART3__PROCESS_TASK 任务 配置
- * 包括: 任务句柄 任务优先级 堆栈大小 创建任务
- */
-#define USART3__PROCESS_TASK_PRIO 13          /* 任务优先级 */
-#define USART3__PROCESS_STK_SIZE 512          /* 任务堆栈大小 */
-TaskHandle_t USART3__PROCESSTask_Handler;     /* 任务句柄 */
-void USART3_Process_Task(void *pvParameters); /* 任务函数 */
+/* USART3__PROCESS_TASK 任务 配置 */
+#define USART3__PROCESS_TASK_PRIO 13                /* 任务优先级 */
+#define USART3__PROCESS_STK_SIZE 512                /* 任务堆栈大小 */
+TaskHandle_t USART3__PROCESSTask_Handler;           /* 任务句柄 */
+void USART3_Process_Task(void *pvParameters);       /* 任务函数 */
 
-/* USART3__SEND_COMMEND_TASK 任务 配置
- * 包括: 任务句柄 任务优先级 堆栈大小 创建任务
- */
-#define USART3__SEND_COMMEND_TASK_PRIO 12          /* 任务优先级 */
-#define USART3__SEND_COMMEND_STK_SIZE 512          /* 任务堆栈大小 */
-TaskHandle_t USART3__SEND_COMMENDTask_Handler;     /* 任务句柄 */
-void USART3_Send_Commend_Task(void *pvParameters); /* 任务函数 */
+/* USART3__SEND_COMMEND_TASK 任务 配置 */
+#define USART3__SEND_COMMEND_TASK_PRIO 12           /* 任务优先级 */
+#define USART3__SEND_COMMEND_STK_SIZE 512           /* 任务堆栈大小 */
+TaskHandle_t USART3__SEND_COMMENDTask_Handler;      /* 任务句柄 */
+void USART3_Send_Commend_Task(void *pvParameters);  /* 任务函数 */
 
-/* SENSOR_DATA_UPLOAD_TASK 配置
- * 包括: 任务句柄 任务优先级 堆栈大小 创建任务
- */
-#define SENSOR_DATA_UPLOAD_TASK_PRIO 11           /* 任务优先级 */
-#define SENSOR_DATA_UPLOAD_TASK_STK_SIZE 512      /* 任务堆栈大小 */
-TaskHandle_t SENSOR_DATA_UPLOADTask_Handler;      /* 任务句柄 */
-void Sensor_Data_UpData_Task(void *pvParameters); /* 任务函数 */
+/* SENSOR_DATA_UPLOAD_TASK 配置 */
+#define SENSOR_DATA_UPLOAD_TASK_PRIO 11             /* 任务优先级 */
+#define SENSOR_DATA_UPLOAD_TASK_STK_SIZE 512        /* 任务堆栈大小 */
+TaskHandle_t SENSOR_DATA_UPLOADTask_Handler;        /* 任务句柄 */
+void Sensor_Data_UpData_Task(void *pvParameters);   /* 任务函数 */
 
-/* KEY_TASK 任务 配置
- * 包括: 任务句柄 任务优先级 堆栈大小 创建任务
- */
-#define KEY_TASK_PRIO 11           /* 任务优先级 */
-#define KEY_STK_SIZE 128           /* 任务堆栈大小 */
-TaskHandle_t KEYTask_Handler;      /* 任务句柄 */
-void key_task(void *pvParameters); /* 任务函数 */
+/* KEY_TASK 任务 配置 */
+#define KEY_TASK_PRIO 11                            /* 任务优先级 */
+#define KEY_STK_SIZE 128                            /* 任务堆栈大小 */
+TaskHandle_t KEYTask_Handler;                       /* 任务句柄 */
+void key_task(void *pvParameters);                  /* 任务函数 */
 
-/* DISPLAY_TASK 任务 配置
- * 包括: 任务句柄 任务优先级 堆栈大小 创建任务
- */
-#define DISPLAY_TASK_PRIO 12           /* 任务优先级 */
-#define DISPLAY_STK_SIZE 512           /* 任务堆栈大小 */
-TaskHandle_t DISPLAYTask_Handler;      /* 任务句柄 */
-void display_task(void *pvParameters); /* 任务函数 */
+/* DISPLAY_TASK 任务 配置 */
+#define DISPLAY_TASK_PRIO 12                        /* 任务优先级 */
+#define DISPLAY_STK_SIZE 512                        /* 任务堆栈大小 */
+TaskHandle_t DISPLAYTask_Handler;                   /* 任务句柄 */
+void display_task(void *pvParameters);              /* 任务函数 */
 
-/* TCP_SEND_TASK 任务 配置
- * 包括: 任务句柄 任务优先级 堆栈大小 创建任务
- */
-#define OTA_TASK_PRIO 10           /* 任务优先级 */
-#define OTA_TASK_SIZE 1024         /* 任务堆栈大小 */
-TaskHandle_t OTATask_Handler;      /* 任务句柄 */
-void ota_task(void *pvParameters); /* 任务函数 */
+/* TCP_SEND_TASK 任务 配置 */
+#define OTA_TASK_PRIO 10                            /* 任务优先级 */
+#define OTA_TASK_SIZE 1024                          /* 任务堆栈大小 */
+TaskHandle_t OTATask_Handler;                       /* 任务句柄 */
+void ota_task(void *pvParameters);                  /* 任务函数 */
 
-/* TCP_SEND_TASK 任务 配置
- * 包括: 任务句柄 任务优先级 堆栈大小 创建任务
- */
-#define TCP_SEND_TASK_PRIO 9            /* 任务优先级 */
-#define TCP_SEND_TASK_SIZE 1024         /* 任务堆栈大小 */
-TaskHandle_t TCP_SENDTask_Handler;      /* 任务句柄 */
-void tcp_send_task(void *pvParameters); /* 任务函数 */
+/* TCP_SEND_TASK 任务 配置 */
+#define TCP_SEND_TASK_PRIO 9                        /* 任务优先级 */
+#define TCP_SEND_TASK_SIZE 1024                     /* 任务堆栈大小 */
+TaskHandle_t TCP_SENDTask_Handler;                  /* 任务句柄 */
+void tcp_send_task(void *pvParameters);             /* 任务函数 */
 
-/* IWDG_FRESH_TASK 任务 配置
- * 包括: 任务句柄 任务优先级 堆栈大小 创建任务
- */
-#define IWDG_FRESH_TASK_PRIO 6            /* 任务优先级 */
-#define IWDG_FRESH_TASK_SIZE 128          /* 任务堆栈大小 */
-TaskHandle_t IWDG_FRESHTask_Handler;      /* 任务句柄 */
-void iwdg_fresh_task(void *pvParameters); /* 任务函数 */
+/* IWDG_FRESH_TASK 任务 配置 */
+#define IWDG_FRESH_TASK_PRIO 6                      /* 任务优先级 */
+#define IWDG_FRESH_TASK_SIZE 128                    /* 任务堆栈大小 */
+TaskHandle_t IWDG_FRESHTask_Handler;                /* 任务句柄 */
+void iwdg_fresh_task(void *pvParameters);           /* 任务函数 */
 
-/* 传感器数据传输队列 配置
- * 包括: 队列句柄 深度 传输内容
- */
-QueueHandle_t xSensorDataQueue = NULL;             /* 数据传输队列 */
-#define xSensorDataQueue_Deep 20                   /* 数据传输队列深度 */
-#define xSensorDataQueue_Size sizeof(SensorData_t) /* 数据传输队列大小 */
+/* 传感器数据传输队列 配置 */
+QueueHandle_t xSensorDataQueue = NULL;              /* 数据传输队列 */
+#define xSensorDataQueue_Deep 20                    /* 数据传输队列深度 */
+#define xSensorDataQueue_Size sizeof(SensorData_t)  /* 数据传输队列大小 */
+
+/* 传感器TCP传输队列 配置 */
+QueueHandle_t xSensorTCPQueue = NULL;               /* TCP传输队列 */
+#define xSensorTCPQueue_Deep 20                     /* TCP传输队列深度 */
+#define xSensorTCPQueue_Size sizeof(SensorData_t)  /* TCP传输队列大小 */
 
 /* 显示消息队列的数量 */
-#define DISPLAYMSG_Q_NUM 20    /* 显示消息队列的数量 */
-QueueHandle_t g_display_queue; /* 显示消息队列句柄 */
+#define DISPLAYMSG_Q_NUM 20                         /* 显示消息队列的数量 */
+QueueHandle_t g_display_queue;                      /* 显示消息队列句柄 */
 
 /******************************************************************************************************/
 
@@ -219,6 +200,15 @@ void start_task(void *pvParameters)
         printf("Sensor data send queue create failed!\r\n");
         return;
     }
+
+    /* 传感器数据TCP传输队列创建 */
+    xSensorTCPQueue = xQueueCreate(xSensorTCPQueue_Deep, xSensorTCPQueue_Size);
+    if (xSensorTCPQueue == NULL)
+    {
+        printf("Sensor TCP send queue create failed!\r\n");
+        return;
+    }
+
     g_display_queue = xQueueCreate(DISPLAYMSG_Q_NUM, sizeof(void *)); /* 创建消息Message_Queue,队列项长度是200长度 */
 
     /* OTA传输队列创建 */
@@ -409,7 +399,6 @@ void display_task(void *pvParameters)
     {
         if (g_display_queue != NULL)
         {
-
             if (xQueueReceive(g_display_queue, &recv_ptr, pdMS_TO_TICKS(500)) == pdTRUE)
             {
                 // lcd_fill(30, 220, lcddev.width - 1, lcddev.height - 1, WHITE); /* 清上一次数据 */
@@ -432,11 +421,19 @@ void display_task(void *pvParameters)
  * @retval      无
  */
 static uint8_t send_buf[3] = {0x55, 0xAA, 0xB0};
+static uint8_t send_buf_tcp[sizeof(SensorData_t) + 5];;
 void tcp_send_task(void *pvParameters)
 {
+    SensorData_t tcp_send_data;
+    const uint16_t data_len = sizeof(SensorData_t);
+    const uint16_t total_len = data_len + 5;    // Header(2) + Type(1) + Data + CRC(2)
+    send_buf_tcp[0] = 0x55; // 起始字节
+    send_buf_tcp[1] = 0xAA; // 起始字节
+    send_buf_tcp[2] = 0xB1; // 数据类型标识，假设0xB1表示传感器数据
+
     for (;;)
     {
-        // 尝试获取信号量，超时时间10ms
+        // 1. OTA ACK 优先
         if (xSemaphoreTake(xOtaSendSemaphore, 0) == pdTRUE)
         {
             int ret = send(g_sock_conn, send_buf, sizeof(send_buf), 0);
@@ -447,6 +444,29 @@ void tcp_send_task(void *pvParameters)
                 printf("ACK send fail %d\r\n", ret);
             }
         }
+
+        // 2. 发送传感器数据
+        if (xQueueReceive(xSensorTCPQueue, &tcp_send_data, pdMS_TO_TICKS(10)) == pdTRUE)
+        {
+            // 拷贝数据到缓冲区偏移 3 的位置
+            memcpy(&send_buf_tcp[3], &tcp_send_data, data_len);
+
+            // 计算 CRC：从开头到数据结束，不包含末尾 2 字节 CRC 位
+            uint16_t calc_crc = CRC16_Modbus(send_buf_tcp, total_len - 2);
+
+            // 小端存储 CRC (低地址存低 8 位)
+            send_buf_tcp[total_len - 2] = calc_crc & 0xFF;        // 倒数第2个字节
+            send_buf_tcp[total_len - 1] = (calc_crc >> 8) & 0xFF; // 倒数第1个字节
+
+            // 发送数据
+            int ret = send(g_sock_conn, send_buf_tcp, total_len, 0);
+
+            if (ret <= 0) {
+                printf("Socket error or disconnected\r\n");
+                // 这里可能需要考虑关闭 socket 或重新连接
+            }
+        }
+
         vTaskDelay(pdMS_TO_TICKS(5));
     }
 }

@@ -95,9 +95,9 @@
 ..\..\output\main.o: ..\..\Drivers\./BSP/KEY/key.h
 ..\..\output\main.o: ..\..\Middlewares\./MALLOC/malloc.h
 ..\..\output\main.o: ..\..\Drivers\./BSP/IWDG/iwdg.h
+..\..\output\main.o: C:\app\KEILMDK\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\main.o: ..\..\User\ota.h
 ..\..\output\main.o: ..\..\User\freertos_demo.h
-..\..\output\main.o: C:\app\KEILMDK\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\main.o: ..\..\Drivers\./BSP/24CXX/24C02.h
 ..\..\output\main.o: ..\..\Drivers\./BSP/IIC/myiic.h
 ..\..\output\main.o: ..\..\Middlewares\FreeRTOS\include\FreeRTOS.h
